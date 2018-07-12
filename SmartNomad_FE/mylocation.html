@@ -37,7 +37,7 @@
                 btn.role = 'button';
                 btn.title = 'Click me to locate you';
                 btn.onclick = function() {
-                    map.locate({setView: true, maxZoom: 13});
+                    map.locate({setView: true, maxZoom: 14});
                 };
                 map.on('locationfound', this.displayMarker, this);
                 map.on('locationerror', this.showLocationErrorMessage, this);
@@ -52,6 +52,7 @@
                     this._marker.setLatLng(evt.latlng);
                     return;
                 }
+                console.log(evt.latlng);
                 this._marker = L.marker(evt.latlng, {
                     title: 'Your current location',
                     icon: L.svgIcon({
@@ -72,6 +73,7 @@
             }
         });
         map.addControl(new FindLocationControl());
+        map.locate({setView: true, maxZoom: 14});
     </script>
 </body>
 </html>
