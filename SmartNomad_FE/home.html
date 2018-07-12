@@ -8,8 +8,8 @@
         <link rel='stylesheet' type='text/css' href='sdk/map.css'/>
         <link rel='stylesheet' type='text/css' href='elements.css'/>
         <script type='text/javascript' src='js/form.js'></script>
-        <script type='text/javascript' src='js/home.js'></script>
         <script type='text/javascript' src='sdk/tomtom.min.js'></script>
+        <script type='text/javascript' src='js/home.js'></script>
         <link rel="stylesheet" type="text/css" href="css/home.css">
     </head>
     <body class='use-all-space'>
@@ -43,7 +43,6 @@
         </form>
         <script>
 
-
             // Define your product name and version
             tomtom.setProductInfo('smartnomad', '1');
             tomtom.key('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
@@ -60,6 +59,13 @@
 
             map.zoomControl.setPosition('topright');
             map.attributionControl.setPosition('bottomright');
+
+            var searchBoxInstance = tomtom.searchBox({
+                position: 'topleft',
+                language: 'en-GB', // optional
+                imperialDistance: false,
+                serviceOptions: {unwrapBbox: true}
+            }).addTo(map);
 
             tomtom.foldable({
                 position: 'topleft',
@@ -172,6 +178,44 @@
                         map.fitBounds(markersLayer.getBounds());
                     });
             });
+
+            // Draw markers for all the results found by the searchBox control (before user selects one)
+            searchBoxInstance.on(searchBoxInstance.Events.ResultsFound, function(results) {
+                drawSearchCenter();
+                markersLayer.setMarkersData(results.data).addMarkers();
+            });
+
+            // Draw markers for all the results found by the searchBox control (before user selects one)
+            searchBoxInstance.on(searchBoxInstance.Events.ResultsCleared, function() {
+                markersLayer.clearLayers();
+            });
+
+            // Add a marker to indicate the position of the result selected by the user
+            searchBoxInstance.on(searchBoxInstance.Events.ResultClicked, function(result) {
+                markersLayer.setMarkersData([result.data]).addMarkers();
+
+                var viewport = result.data.viewport;
+                if (viewport) {
+                    map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
+                } else {
+                    map.fitBounds(markersLayer.getBounds());
+                }
+            });
+
+            // Draw a marker at the center of the map
+            function drawSearchCenter() {
+                var currentLocation = map.getCenter();
+                latlong.lat = currentLocation.lat;
+                latlong.long = currentLocation.lng;
+                var markerOptions = {
+                    title: 'Search Center\nLatitude: ' + currentLocation.lat + '\nLongitude: ' + currentLocation.lng,
+                    icon: tomtom.L.icon({
+                        iconUrl: '/sdk/../img/center_marker.svg',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    })
+                };
+            }
         </script>
     </body>
 </html>
