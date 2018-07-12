@@ -62,6 +62,9 @@
             var latlong = new Object();
             latlong.lat = 0;
             latlong.long = 0;
+            var search_latlon = new Object();
+            search_latlon.lat = 0;
+            search_latlon.long = 0;
 
             var locations=[];
             map.zoomControl.setPosition('topright');
@@ -81,7 +84,7 @@
 
             var markersLayer = L.tomTomMarkersLayer().addTo(map);
 
-            markersLayer.setPopupOptions({popupHoverContent: hoverFunction, popupContent: popupContentFunction});
+            markersLayer.setPopupOptions({popupHoverContent:Â hoverFunction,Â popupContent:Â popupContentFunction});
 
             markersLayer.on('click',function(event){
             locations.push({lat:event.latlng.lat,lon:event.latlng.lng});
@@ -160,10 +163,10 @@
                     .map(function(input) {
                         return places.map(function(place) {
                             return {
-                                lat: latlong.lat,
-                                lon: latlong.long,
+                                lat: search_latlon.lat,
+                                lon: search_latlon.long,
                                 query: input.value,
-                                limit: 20
+                                limit: 100
                             };
                         });
                     }).reduce(function(acc, curr) {
@@ -203,6 +206,8 @@
             // Draw markers for all the results found by the searchBox control (before user selects one)
             searchBoxInstance.on(searchBoxInstance.Events.ResultsFound, function(results) {
                 drawSearchCenter();
+
+
                 markersLayer.setMarkersData(results.data).addMarkers();
             });
 
@@ -214,8 +219,9 @@
             // Add a marker to indicate the position of the result selected by the user
             searchBoxInstance.on(searchBoxInstance.Events.ResultClicked, function(result) {
                 markersLayer.setMarkersData([result.data]).addMarkers();
-                latlong.lat =result.data.position.lat;
-                latlong.long =result.data.position.lon;
+                search_latlon.lat =result.data.position.lat;
+                search_latlon.long =result.data.position.lon;
+                 console.log(result.data);
                 var viewport = result.data.viewport;
                 if (viewport) {
                     map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
