@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My map</title>
+        <link rel='stylesheet' type='text/css' href='mapsSDK/map.css'/>
+        <script src='mapsSDK/tomtom.min.js'></script>
+    </head>
+    <body>
+        <div id='map' style='height:700px; width:100%'></div>
+        <script>
+	    tomtom.setProductInfo('smartnomad', '1');
+            tomtom.L.map('map', {
+		    key: '2taJDBchWSpd6FlGd027ACPhD9cIzkto',
+                    source: 'vector',
+                    basePath: '/mapsSDK'
+	    });
+        </script>
+    </body>
+</html>
