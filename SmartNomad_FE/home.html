@@ -13,7 +13,10 @@
         <link rel="stylesheet" type="text/css" href="css/home.css">
     </head>
     <body class='use-all-space'>
-        <div id='loader' class='loader loader-center hidden'></div>
+
+    <button id="route" onclick="myRoutePlanner()">Route Planner</button>
+
+    <div id='loader' class='loader loader-center hidden'></div>
         <div id='map' class='use-all-space'></div>
         <form class='sidepanel' id='form'>
             <h2>Categories</h2>
@@ -41,6 +44,8 @@
             </ul>
             <input type='submit' value='Submit'>
         </form>
+
+
         <script>
 
             // Define your product name and version
@@ -51,6 +56,7 @@
             var map = tomtom.L.map('map', {
                 source: 'vector',
                 basePath: '/sdk'
+
             });
 
             var latlong = new Object();
@@ -59,6 +65,8 @@
             var search_latlon = new Object();
             search_latlon.lat = 0;
             search_latlon.long = 0;
+
+            var locations=[];
             map.zoomControl.setPosition('topright');
             map.attributionControl.setPosition('bottomright');
 
@@ -75,6 +83,20 @@
             }).addTo(map).addContent(document.getElementById('form'));
 
             var markersLayer = L.tomTomMarkersLayer().addTo(map);
+
+            markersLayer.setPopupOptions({popupHoverContent: hoverFunction, popupContent: popupContentFunction});
+
+            markersLayer.on('click',function(event){
+            locations.push({lat:event.latlng.lat,lon:event.latlng.lng});
+            });
+
+            function hoverFunction() {
+                return "bye";
+            }
+
+            function popupContentFunction() {
+                return "tata";
+            }
             markersLayer.setMarkerOptions({
                 chunkedLoading: true,
                 disableClusteringAtZoom: 12,
@@ -223,6 +245,16 @@
                     })
                 };
             }
+
+             function myRoutePlanner() {
+                console.log(latlong);
+            }
+
+            var drawRoute =function(){
+            var routeOnMapView = tomtom.routeOnMap().addTo(map);
+                routeOnMapView.draw(locations);
+
+            };
         </script>
     </body>
 </html>
