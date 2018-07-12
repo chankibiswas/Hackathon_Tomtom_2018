@@ -185,3 +185,9 @@ input[type='submit'] {
     height: 30px;
     background: #91af2d;
 }
+
+.btn-primary {
+    background: #BDD731;
+    color: #000000;
+    border-radius: 30px;
+}

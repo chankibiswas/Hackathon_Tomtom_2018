@@ -17,7 +17,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
     </head>
     <body class='use-all-space'>
-        <!--<button id="route" onclick="myRoutePlanner()">Route Planner</button>-->
         <div id='loader' class='loader loader-center hidden'></div>
         <div id='map' class='use-all-space'></div>
         <form class='sidepanel' id='form'>
@@ -46,7 +45,7 @@
             </ul>
             <input type='submit' value='Submit'>
         </form>
-        
+        <button id="routePlanner" class="btn btn-outline-info btn-sm" onclick="planRoute()">Route Planner</button>
         <script>
 
             // Define your product name and version
@@ -79,6 +78,11 @@
                 position: 'topleft',
                 closeOnMapClick: false
             }).addTo(map).addContent(document.getElementById('form'));
+
+            tomtom.foldable({
+                position: 'topleft',
+                closeOnMapClick: false
+            }).addTo(map).addContent(document.getElementById('routePlanner'));
 
             var markersLayer = L.tomTomMarkersLayer().addTo(map);
 
@@ -241,8 +245,8 @@
                 };
             }
 
-             function myRoutePlanner() {
-                console.log(latlong);
+             function planRoute() {
+                console.log('Hello World');
             }
 
             var drawRoute =function(){
