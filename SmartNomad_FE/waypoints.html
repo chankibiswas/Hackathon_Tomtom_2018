@@ -10,6 +10,7 @@
     <link rel='stylesheet' type='text/css' href='elements.css'/>
     <script type='text/javascript' src='js/form.js'></script>
     <script type='text/javascript' src='sdk/tomtom.min.js'></script>
+
     <style>
         label {
             display: flex;
@@ -21,10 +22,22 @@
             flex: auto;
             margin-left: 10px;
         }
+
     </style>
 </head>
 
 <body class='use-all-space'>
+
+<table>
+    <tr>
+        <td id="displayDistance">
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td id="timeDisp"></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td id="trafficDelay"></td>
+    </tr>
+</table>
+<!--<label id="displayDistance"></label>-->
 <div id='map' class='use-all-space'></div>
 <script>
     // Define your product name and version
@@ -80,7 +93,9 @@
         routeOnMapView.draw(eventObject.points);
 
         function onEachFeature(feature, layer) {
+
             console.log(feature.properties.summary.lengthInMeters);
+            displayDistanceTimeTraffic(feature.properties.summary);
         }
 
         var result = tomtom.routing({key: '2taJDBchWSpd6FlGd027ACPhD9cIzkto'})
@@ -90,14 +105,38 @@
                 var val = tomtom.L.geoJson(routeGeoJson, {
                     onEachFeature: onEachFeature
                 })
-                console.log(val.getLayers());
+
             });
 
 
     });
     routeInputs.on(routeInputs.Events.LocationsCleared, function (eventObject) {
         routeOnMapView.draw(eventObject.points);
-    });
+
+        function onEachFeature(feature, layer) {
+
+            console.log(feature.properties.summary);
+            displayDistanceTimeTraffic(feature.properties.summary);
+        }
+
+        var result = tomtom.routing({key: '2taJDBchWSpd6FlGd027ACPhD9cIzkto'})
+            .locations(eventObject.points)
+            .go()
+            .then(function (routeGeoJson) {
+                var val = tomtom.L.geoJson(routeGeoJson, {
+                    onEachFeature: onEachFeature
+                })
+
+            });
+
+    })
+    ;
+
+    function displayDistanceTimeTraffic(summary) {
+        document.getElementById("displayDistance").innerHTML = "Route distance " + (summary.lengthInMeters / 1000).toFixed(2) + "km";
+        document.getElementById("timeDisp").innerHTML = "Time " + (summary.travelTimeInSeconds / (60 * 60)).toFixed(2) + "hours";
+        document.getElementById("trafficDelay").innerHTML = "Traffic delay " + (summary.trafficDelayInSeconds / 60).toFixed(2) + "minutes";
+    }
 
     // Show notification on route-inputs widget when the user location cannot be detected
     routeInputs.on(routeInputs.Events.LocationError, function () {
