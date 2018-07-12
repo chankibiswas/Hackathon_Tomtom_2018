@@ -56,9 +56,6 @@
             var latlong = new Object();
             latlong.lat = 0;
             latlong.long = 0;
-            var search_latlon = new Object();
-            search_latlon.lat = 0;
-            search_latlon.long = 0;
             map.zoomControl.setPosition('topright');
             map.attributionControl.setPosition('bottomright');
 
@@ -141,10 +138,10 @@
                     .map(function(input) {
                         return places.map(function(place) {
                             return {
-                                lat: search_latlon.lat,
-                                lon: search_latlon.long,
+                                lat: latlong.lat,
+                                lon: latlong.long,
                                 query: input.value,
-                                limit: 100
+                                limit: 20
                             };
                         });
                     }).reduce(function(acc, curr) {
@@ -184,8 +181,6 @@
             // Draw markers for all the results found by the searchBox control (before user selects one)
             searchBoxInstance.on(searchBoxInstance.Events.ResultsFound, function(results) {
                 drawSearchCenter();
-
-
                 markersLayer.setMarkersData(results.data).addMarkers();
             });
 
@@ -197,9 +192,8 @@
             // Add a marker to indicate the position of the result selected by the user
             searchBoxInstance.on(searchBoxInstance.Events.ResultClicked, function(result) {
                 markersLayer.setMarkersData([result.data]).addMarkers();
-                search_latlon.lat =result.data.position.lat;
-                search_latlon.long =result.data.position.lon;
-                 console.log(result.data);
+                latlong.lat =result.data.position.lat;
+                latlong.long =result.data.position.lon;
                 var viewport = result.data.viewport;
                 if (viewport) {
                     map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
