@@ -2,12 +2,12 @@
 <html class='use-all-space'>
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <meta charset='UTF-8'>
     <title>TomTom JavaScript SDK - Routing from my location</title>
-    <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <link rel='stylesheet' type='text/css' href='sdk/map.css' />
-    <link rel='stylesheet' type='text/css' href='elements.css' />
+    <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel='stylesheet' type='text/css' href='sdk/map.css'/>
+    <link rel='stylesheet' type='text/css' href='elements.css'/>
     <script type='text/javascript' src='js/form.js'></script>
     <script type='text/javascript' src='sdk/tomtom.min.js'></script>
     <style>
@@ -25,69 +25,85 @@
 </head>
 
 <body class='use-all-space'>
-    <div id='map' class='use-all-space'></div>
-    <script>
-        // Define your product name and version
-        tomtom.setProductInfo('smartnomad', '1');
-        // Setting TomTom keys
-        tomtom.routingKey('${api.key.routing}');
-        tomtom.searchKey('${api.key.search}');
+<div id='map' class='use-all-space'></div>
+<script>
+    // Define your product name and version
+    tomtom.setProductInfo('smartnomad', '1');
+    // Setting TomTom keys
+    tomtom.routingKey('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
+    tomtom.searchKey('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
 
-        // Creating maps
-        var map = tomtom.L.map('map', {
-            key: '${api.key}',
-            source: 'vector',
-            basePath: '/sdk'
-        });
-        map.zoomControl.setPosition('topright');
+    // Creating maps
+    var map = tomtom.L.map('map', {
+        key: '2taJDBchWSpd6FlGd027ACPhD9cIzkto',
+        source: 'vector',
+        basePath: '/sdk'
+    });
+    map.zoomControl.setPosition('topright');
 
-        var unitSelector = tomtom.unitSelector.getHtmlElement(tomtom.globalUnitService);
-        var languageSelector = tomtom.languageSelector.getHtmlElement(tomtom.globalLocaleService, 'search');
+    var unitSelector = tomtom.unitSelector.getHtmlElement(tomtom.globalUnitService);
+    var languageSelector = tomtom.languageSelector.getHtmlElement(tomtom.globalLocaleService, 'search');
 
-        var unitRow = document.createElement('div');
-        var unitLabel = document.createElement('label');
-        unitLabel.innerHTML = 'Unit of measurement';
-        unitLabel.appendChild(unitSelector);
-        unitRow.appendChild(unitLabel);
-        unitRow.className = 'input-container';
+    var unitRow = document.createElement('div');
+    var unitLabel = document.createElement('label');
+    unitLabel.innerHTML = 'Unit of measurement';
+    unitLabel.appendChild(unitSelector);
+    unitRow.appendChild(unitLabel);
+    unitRow.className = 'input-container';
 
-        var langRow = document.createElement('div');
-        var langLabel = document.createElement('label');
-        langLabel.innerHTML = 'Search language';
-        langLabel.appendChild(languageSelector);
-        langRow.appendChild(langLabel);
-        langRow.className = 'input-container';
+    var langRow = document.createElement('div');
+    var langLabel = document.createElement('label');
+    langLabel.innerHTML = 'Search language';
+    langLabel.appendChild(languageSelector);
+    langRow.appendChild(langLabel);
+    langRow.className = 'input-container';
 
-        tomtom.controlPanel({
-            position: 'bottomright',
-            title: 'Settings',
-            collapsed: true
-        })
-            .addTo(map)
-            .addContent(unitRow)
-            .addContent(langRow);
+    tomtom.controlPanel({
+        position: 'bottomright',
+        title: 'Settings',
+        collapsed: true
+    })
+        .addTo(map)
+        .addContent(unitRow)
+        .addContent(langRow);
 
-        // Adding route-inputs widget
-        var routeInputs = tomtom.routeInputs({
-            enableSearchBoxesModifcation: true
-        }).addTo(map);
+    // Adding route-inputs widget
+    var routeInputs = tomtom.routeInputs({
+        enableSearchBoxesModifcation: true
+    }).addTo(map);
 
-        // Adding route-on-map widget
-        var routeOnMapView = tomtom.routeOnMap().addTo(map);
+    // Adding route-on-map widget
+    var routeOnMapView = tomtom.routeOnMap().addTo(map);
 
-        // Connecting route-inputs with route-on-map widget
-        routeInputs.on(routeInputs.Events.LocationsFound, function(eventObject) {
-            routeOnMapView.draw(eventObject.points);
-        });
-        routeInputs.on(routeInputs.Events.LocationsCleared, function(eventObject) {
-            routeOnMapView.draw(eventObject.points);
-        });
+    // Connecting route-inputs with route-on-map widget
+    routeInputs.on(routeInputs.Events.LocationsFound, function (eventObject) {
+        routeOnMapView.draw(eventObject.points);
 
-        // Show notification on route-inputs widget when the user location cannot be detected
-        routeInputs.on(routeInputs.Events.LocationError, function() {
-            routeInputs.showLocationNotFoundMessageBox();
-        });
-    </script>
+        function onEachFeature(feature, layer) {
+            console.log(feature.properties.summary.lengthInMeters);
+        }
+
+        var result = tomtom.routing({key: '2taJDBchWSpd6FlGd027ACPhD9cIzkto'})
+            .locations(eventObject.points)
+            .go()
+            .then(function (routeGeoJson) {
+                var val = tomtom.L.geoJson(routeGeoJson, {
+                    onEachFeature: onEachFeature
+                })
+                console.log(val.getLayers());
+            });
+
+
+    });
+    routeInputs.on(routeInputs.Events.LocationsCleared, function (eventObject) {
+        routeOnMapView.draw(eventObject.points);
+    });
+
+    // Show notification on route-inputs widget when the user location cannot be detected
+    routeInputs.on(routeInputs.Events.LocationError, function () {
+        routeInputs.showLocationNotFoundMessageBox();
+    });
+</script>
 </body>
 
 </html>
