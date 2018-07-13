@@ -1,259 +1,257 @@
 <!DOCTYPE html>
 <html class='use-all-space'>
-    <head>
-        <meta http-equiv="X-UA-Compatible"/>
-        <meta charset='UTF-8'>
-        <title>TomTom JavaScript SDK - Current location support</title>
-        <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
-        <link rel='stylesheet' type='text/css' href='sdk/map.css'/>
-        <link rel='stylesheet' type='text/css' href='elements.css'/>
-        <script type='text/javascript' src='js/form.js'></script>
-        <script type='text/javascript' src='sdk/tomtom.min.js'></script>
-        <script type='text/javascript' src='js/home.js'></script>
-        <link rel="stylesheet" type="text/css" href="css/home.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-    </head>
-    <body class='use-all-space'>
-        <div id='loader' class='loader loader-center hidden'></div>
-        <div id='map' class='use-all-space'></div>
-        <form class='sidepanel' id='form'>
-            <h2>Categories</h2>
-            <ul class='pois'>
-                <li><label>
-                    <input name='category' value='museum' type='checkbox'>
-                    <span class='text'>museum</span>
-                </label></li>
-                <li><label>
-                    <input name='category' value='restaurant' type='checkbox'>
-                    <span class='text'>restaurant</span>
-                </label></li>
-                <li><label>
-                    <input name='category' value='hospital' type='checkbox'>
-                    <span class='text'>hospital</span>
-                </label></li>
-                <li><label>
-                    <input name='category' value='stadium' type='checkbox'>
-                    <span class='text'>stadium</span>
-                </label></li>
-                <li><label>
-                    <input name='category' value='hotel' type='checkbox'>
-                    <span class='text'>hotel</span>
-                </label></li>
-            </ul>
-            <input type='submit' value='Submit'>
-        </form>
-        <button id="routePlanner" class="btn btn-outline-info btn-sm" onclick="planRoute()">Route Planner</button>
-        <script>
+<head>
+    <meta http-equiv="X-UA-Compatible"/>
+    <meta charset='UTF-8'>
+    <title>TomTom JavaScript SDK - Current location support</title>
+    <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel='stylesheet' type='text/css' href='sdk/map.css'/>
+    <link rel='stylesheet' type='text/css' href='elements.css'/>
+    <script type='text/javascript' src='js/form.js'></script>
+    <script type='text/javascript' src='sdk/tomtom.min.js'></script>
+    <script type='text/javascript' src='js/home.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+</head>
+<body class='use-all-space'>
+<div id='loader' class='loader loader-center hidden'></div>
+<div id='map' class='use-all-space'></div>
+<form class='sidepanel' id='form'>
+    <h2>Categories</h2>
+    <ul class='pois'>
+        <li><label>
+            <input name='category' value='museum' type='checkbox'>
+            <span class='text'>museum</span>
+        </label></li>
+        <li><label>
+            <input name='category' value='restaurant' type='checkbox'>
+            <span class='text'>restaurant</span>
+        </label></li>
+        <li><label>
+            <input name='category' value='hospital' type='checkbox'>
+            <span class='text'>hospital</span>
+        </label></li>
+        <li><label>
+            <input name='category' value='stadium' type='checkbox'>
+            <span class='text'>stadium</span>
+        </label></li>
+        <li><label>
+            <input name='category' value='hotel' type='checkbox'>
+            <span class='text'>hotel</span>
+        </label></li>
+    </ul>
+    <input type='submit' value='Submit'>
+</form>
+<button id="routePlanner" class="btn btn-outline-info btn-sm" onclick="planRoute()">Route Planner</button>
+<script>
 
-            // Define your product name and version
-            tomtom.setProductInfo('smartnomad', '1');
-            tomtom.key('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
-            tomtom.searchKey('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
-            // Creating map
-            var map = tomtom.L.map('map', {
-                source: 'vector',
-                basePath: '/sdk'
+    // Define your product name and version
+    tomtom.setProductInfo('smartnomad', '1');
+    tomtom.key('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
+    tomtom.searchKey('2taJDBchWSpd6FlGd027ACPhD9cIzkto');
+    // Creating map
+    var map = tomtom.L.map('map', {
+        source: 'vector',
+        basePath: '/sdk'
 
-            });
+    });
 
-            var latlong = new Object();
-            latlong.lat = 0;
-            latlong.long = 0;
+    var latlong = new Object();
+    latlong.lat = 0;
+    latlong.long = 0;
 
-            var locations=[];
-            map.zoomControl.setPosition('topright');
-            map.attributionControl.setPosition('bottomright');
+    var locations = [];
+    map.zoomControl.setPosition('topright');
+    map.attributionControl.setPosition('bottomright');
 
-            var searchBoxInstance = tomtom.searchBox({
-                position: 'topleft',
-                language: 'en-GB', // optional
-                imperialDistance: false,
-                serviceOptions: {unwrapBbox: true}
-            }).addTo(map);
+    var searchBoxInstance = tomtom.searchBox({
+        position: 'topleft',
+        language: 'en-GB', // optional
+        imperialDistance: false,
+        serviceOptions: {unwrapBbox: true}
+    }).addTo(map);
 
-            tomtom.foldable({
-                position: 'topleft',
-                closeOnMapClick: false
-            }).addTo(map).addContent(document.getElementById('form'));
+    tomtom.foldable({
+        position: 'topleft',
+        closeOnMapClick: false
+    }).addTo(map).addContent(document.getElementById('form'));
 
-            tomtom.foldable({
-                position: 'topleft',
-                closeOnMapClick: false
-            }).addTo(map).addContent(document.getElementById('routePlanner'));
+    tomtom.foldable({
+        position: 'topleft',
+        closeOnMapClick: false
+    }).addTo(map).addContent(document.getElementById('routePlanner'));
 
-            var markersLayer = L.tomTomMarkersLayer().addTo(map);
+    var markersLayer = L.tomTomMarkersLayer().addTo(map);
 
-            markersLayer.setPopupOptions({popupHoverContent:hoverFunction,popupContent:popupContentFunction});
+    markersLayer.on('click', function (event) {
+        locations.push({lat: event.latlng.lat, lon: event.latlng.lng});
+    });
 
-            markersLayer.on('click',function(event){
-            locations.push({lat:event.latlng.lat,lon:event.latlng.lng});
-            });
+    markersLayer.setMarkerOptions({
+        chunkedLoading: true,
+        disableClusteringAtZoom: 12,
+        maxClusterRadius: 80,
+        noMarkerClustering: false,
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: false
+    });
+    markersLayer.on('clusterclick', function (event) {
+        event.layer.zoomToBounds({padding: [10, 10]});
+    });
 
-            function hoverFunction() {
-                return "bye";
+    // Creating Find Location widget
+    var FindLocationControl = tomtom.L.Control.extend({
+        onAdd: function (map) {
+            var container = L.DomUtil.create('div', 'leaflet-control'),
+                btn = L.DomUtil.create('div', 'icon-locate_me_btn', container);
+            btn.role = 'button';
+            btn.title = 'Click me to locate you';
+            btn.onclick = function () {
+                map.locate({setView: true, maxZoom: 14});
+            };
+            map.on('locationfound', this.displayMarker, this);
+            map.on('locationerror', this.showLocationErrorMessage, this);
+            return container;
+        },
+        onRemove: function (map) {
+            map.off('locationfound', this.displayMarker, this);
+            map.off('locationerror', this.showLocationErrorMessage, this);
+        },
+        displayMarker: function (evt) {
+            if (this._marker) {
+                this._marker.setLatLng(evt.latlng);
+                return;
             }
+            latlong.lat = evt.latlng.lat;
+            latlong.long = evt.latlng.lng;
+            this._marker = L.marker(evt.latlng, {
+                title: 'Your current location',
+                icon: L.svgIcon({
+                    background: {
+                        icon: 'icon-locate_me_btn',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    },
+                    icon: null,
+                    opacity: 1
+                })
+            }).addTo(this._map);
+        },
+        showLocationErrorMessage: function () {
+            tomtom.messageBox({closeAfter: 3000})
+                .setContent('Could not find your location')
+                .openOn(this._map);
+        }
+    });
+    map.addControl(new FindLocationControl());
+    map.locate({setView: true, maxZoom: 14});
 
-            function popupContentFunction() {
-                return "tata";
-            }
-            markersLayer.setMarkerOptions({
-                chunkedLoading: true,
-                disableClusteringAtZoom: 12,
-                maxClusterRadius: 80,
-                noMarkerClustering: false,
-                showCoverageOnHover: false,
-                spiderfyOnMaxZoom: false
-            });
-            markersLayer.on('clusterclick', function(event) {
-                event.layer.zoomToBounds({padding: [10, 10]});
-            });
-
-            // Creating Find Location widget
-            var FindLocationControl = tomtom.L.Control.extend({
-                onAdd: function(map) {
-                    var container = L.DomUtil.create('div', 'leaflet-control'),
-                        btn = L.DomUtil.create('div', 'icon-locate_me_btn', container);
-                    btn.role = 'button';
-                    btn.title = 'Click me to locate you';
-                    btn.onclick = function() {
-                        map.locate({setView: true, maxZoom: 14});
+    var getParameters = function (form) {
+        var inputs = form.querySelectorAll('input[name=category]:checked');
+        var places = [{}];
+        return Array.apply(null, inputs)
+            .map(function (input) {
+                return places.map(function (place) {
+                    return {
+                        lat: latlong.lat,
+                        lon: latlong.long,
+                        query: input.value,
+                        limit: 20
                     };
-                    map.on('locationfound', this.displayMarker, this);
-                    map.on('locationerror', this.showLocationErrorMessage, this);
-                    return container;
-                },
-                onRemove: function(map) {
-                    map.off('locationfound', this.displayMarker, this);
-                    map.off('locationerror', this.showLocationErrorMessage, this);
-                },
-                displayMarker: function(evt) {
-                    if (this._marker) {
-                        this._marker.setLatLng(evt.latlng);
-                        return;
-                    }
-                    latlong.lat = evt.latlng.lat;
-                    latlong.long = evt.latlng.lng;
-                    this._marker = L.marker(evt.latlng, {
-                        title: 'Your current location',
-                        icon: L.svgIcon({
-                            background: {
-                                icon: 'icon-locate_me_btn',
-                                iconSize: [30, 30],
-                                iconAnchor: [15, 15]
-                            },
-                            icon: null,
-                            opacity: 1
-                        })
-                    }).addTo(this._map);
-                },
-                showLocationErrorMessage: function() {
-                    tomtom.messageBox({closeAfter: 3000})
-                        .setContent('Could not find your location')
-                        .openOn(this._map);
-                }
-            });
-            map.addControl(new FindLocationControl());
-            map.locate({setView: true, maxZoom: 14});
+                });
+            }).reduce(function (acc, curr) {
+                return acc.concat(curr);
+            }, []);
+    };
 
-            var getParameters = function(form) {
-                var inputs = form.querySelectorAll('input[name=category]:checked');
-                var places = [{}];
-                return Array.apply(null, inputs)
-                    .map(function(input) {
-                        return places.map(function(place) {
-                            return {
-                                lat: latlong.lat,
-                                lon: latlong.long,
-                                query: input.value,
-                                limit: 20
-                            };
-                        });
-                    }).reduce(function(acc, curr) {
+    var requestCount = 0;
+    document.getElementById('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var parameters = getParameters(this);
+        var currentRequest = ++requestCount;
+        if (!parameters.length) {
+            throw new Error('Insufficient parameters - please, select at least one category.');
+        }
+        loader.classList.remove('hidden');
+        tomtom.categorySearch(parameters).go()
+            .then(function (results) {
+                if (currentRequest !== requestCount) {
+                    return;
+                }
+                loader.classList.add('hidden');
+                var points = results;
+                if (results.length && results[0].length) {
+                    points = results.reduce(function (acc, curr) {
                         return acc.concat(curr);
                     }, []);
-            };
-
-            var requestCount = 0;
-            document.getElementById('form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                var parameters = getParameters(this);
-                var currentRequest = ++requestCount;
-                if (!parameters.length) {
-                    throw new Error('Insufficient parameters - please, select at least one category.');
                 }
-                loader.classList.remove('hidden');
-                tomtom.categorySearch(parameters).go()
-                    .then(function(results) {
-                        if (currentRequest !== requestCount) {
-                            return;
-                        }
-                        loader.classList.add('hidden');
-                        var points = results;
-                        if (results.length && results[0].length) {
-                            points = results.reduce(function(acc, curr) {
-                                return acc.concat(curr);
-                            }, []);
-                        }
-                        markersLayer
-                            .clearLayers()
-                            .setMarkersData(points)
-                            .addMarkers();
-                        map.fitBounds(markersLayer.getBounds());
-                    });
+                markersLayer
+                    .clearLayers()
+                    .setMarkersData(points)
+                    .addMarkers();
+                map.fitBounds(markersLayer.getBounds());
             });
+    });
 
-            // Draw markers for all the results found by the searchBox control (before user selects one)
-            searchBoxInstance.on(searchBoxInstance.Events.ResultsFound, function(results) {
-                drawSearchCenter();
-                markersLayer.setMarkersData(results.data).addMarkers();
-            });
+    // Draw markers for all the results found by the searchBox control (before user selects one)
+    searchBoxInstance.on(searchBoxInstance.Events.ResultsFound, function (results) {
+        drawSearchCenter();
+        markersLayer.setMarkersData(results.data).addMarkers();
+    });
 
-            // Draw markers for all the results found by the searchBox control (before user selects one)
-            searchBoxInstance.on(searchBoxInstance.Events.ResultsCleared, function() {
-                markersLayer.clearLayers();
-            });
+    // Draw markers for all the results found by the searchBox control (before user selects one)
+    searchBoxInstance.on(searchBoxInstance.Events.ResultsCleared, function () {
+        markersLayer.clearLayers();
+    });
 
-            // Add a marker to indicate the position of the result selected by the user
-            searchBoxInstance.on(searchBoxInstance.Events.ResultClicked, function(result) {
-                markersLayer.setMarkersData([result.data]).addMarkers();
-                latlong.lat =result.data.position.lat;
-                latlong.long =result.data.position.lon;
-                var viewport = result.data.viewport;
-                if (viewport) {
-                    map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
-                } else {
-                    map.fitBounds(markersLayer.getBounds());
-                }
-            });
+    // Add a marker to indicate the position of the result selected by the user
+    searchBoxInstance.on(searchBoxInstance.Events.ResultClicked, function (result) {
+        markersLayer.setMarkersData([result.data]).addMarkers();
+        latlong.lat = result.data.position.lat;
+        latlong.long = result.data.position.lon;
+        var viewport = result.data.viewport;
+        if (viewport) {
+            map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
+        } else {
+            map.fitBounds(markersLayer.getBounds());
+        }
+    });
 
-            // Draw a marker at the center of the map
-            function drawSearchCenter() {
-                var currentLocation = map.getCenter();
-                latlong.lat = currentLocation.lat;
-                latlong.long = currentLocation.lng;
+    // Draw a marker at the center of the map
+    function drawSearchCenter() {
+        var currentLocation = map.getCenter();
+        latlong.lat = currentLocation.lat;
+        latlong.long = currentLocation.lng;
 
-                var markerOptions = {
-                    title: 'Search Center\nLatitude: ' + currentLocation.lat + '\nLongitude: ' + currentLocation.lng,
-                    icon: tomtom.L.icon({
-                        iconUrl: '/sdk/../img/center_marker.svg',
-                        iconSize: [24, 24],
-                        iconAnchor: [12, 12]
-                    })
-                };
-            }
+        var markerOptions = {
+            title: 'Search Center\nLatitude: ' + currentLocation.lat + '\nLongitude: ' + currentLocation.lng,
+            icon: tomtom.L.icon({
+                iconUrl: '/sdk/../img/center_marker.svg',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            })
+        };
+    }
 
-             function planRoute() {
-                console.log('Hello World');
-            }
+    function planRoute() {
+        console.log('Hello World');
+    }
 
-            var drawRoute =function(){
-            var routeOnMapView = tomtom.routeOnMap().addTo(map);
-                routeOnMapView.draw(locations);
+    var drawRoute = function () {
+        var routeOnMapView = tomtom.routeOnMap().addTo(map);
+        routeOnMapView.draw(locations);
 
-            };
-        </script>
-    </body>
+    };
+</script>
+</body>
 </html>
