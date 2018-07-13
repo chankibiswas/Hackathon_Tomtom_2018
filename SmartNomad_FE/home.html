@@ -51,9 +51,13 @@
         </label></li>
     </ul>
     <input type='submit' value='Submit'>
-</form>
-<button id="routePlanner" class="btn btn-outline-info btn-sm" onclick="planRoute()">Route Planner</button>
-<script>
+        </form>
+        <button id="routePlanner" class="btn btn-outline-info btn-sm" onclick="planRoute()">Route Planner</button>
+        <div>
+            <button id="routeReset" class="btn btn-outline-info btn-sm" onclick="resetRoute()">Route Reset</button>
+        </div>
+
+        <script>
 
     // Define your product name and version
     tomtom.setProductInfo('smartnomad', '1');
@@ -90,6 +94,11 @@
         position: 'topleft',
         closeOnMapClick: false
     }).addTo(map).addContent(document.getElementById('routePlanner'));
+
+            tomtom.foldable({
+                position: 'topleft',
+                closeOnMapClick: false
+            }).addTo(map).addContent(document.getElementById('routeReset'));
 
     var markersLayer = L.tomTomMarkersLayer().addTo(map);
 
@@ -212,6 +221,8 @@
     // Draw markers for all the results found by the searchBox control (before user selects one)
     searchBoxInstance.on(searchBoxInstance.Events.ResultsCleared, function () {
         markersLayer.clearLayers();
+
+
     });
 
     // Add a marker to indicate the position of the result selected by the user
@@ -219,6 +230,7 @@
         markersLayer.setMarkersData([result.data]).addMarkers();
         latlong.lat = result.data.position.lat;
         latlong.long = result.data.position.lon;
+        locations.push({lat:latlong.lat,lon:latlong.long});
         var viewport = result.data.viewport;
         if (viewport) {
             map.fitBounds([viewport.topLeftPoint, viewport.btmRightPoint]);
@@ -232,7 +244,6 @@
         var currentLocation = map.getCenter();
         latlong.lat = currentLocation.lat;
         latlong.long = currentLocation.lng;
-
         var markerOptions = {
             title: 'Search Center\nLatitude: ' + currentLocation.lat + '\nLongitude: ' + currentLocation.lng,
             icon: tomtom.L.icon({
@@ -242,16 +253,23 @@
             })
         };
     }
+            var routeOnMapView;
+             function planRoute() {
+                drawRoute();
 
-    function planRoute() {
-        console.log('Hello World');
     }
+            function resetRoute() {
+                routeOnMapView.clear();
+                markersLayer.clearLayers();
+            };
 
-    var drawRoute = function () {
-        var routeOnMapView = tomtom.routeOnMap().addTo(map);
-        routeOnMapView.draw(locations);
+             var drawRoute = function () {
+                routeOnMapView = tomtom.routeOnMap().addTo(map);
+                routeOnMapView.draw(locations);
+                locations.splice(0,locations.length);
+             };
 
-    };
+
 </script>
 </body>
 </html>
